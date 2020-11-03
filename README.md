@@ -24,7 +24,7 @@
 |---------------------|---------------|--------------------| 
 | seller              | integer       | null: false        |
 | category_id         | integer       | null: false        |
-| condition           | integer       | null: false        |
+| condition_id        | integer       | null: false        |
 | price               | integer       | null: false        |
 | name                | string        | null: false        |
 | description         | text          | null: false        |
