@@ -4,6 +4,8 @@
 
 |        Column       |  Type  |   Options   |
 |---------------------|--------|-------------|
+| email               | string | null: false |
+| password            | string | null: false |
 | name                | string | null: false |
 | nickname            | string | null: false |
 | hiragana_name_first | string | null: false |
