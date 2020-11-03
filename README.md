@@ -5,8 +5,7 @@
 |        Column       |  Type  |   Options   |
 |---------------------|--------|-------------|
 | email               | string | null: false |
-| password            | string | null: false |
-| name                | string | null: false |
+| encrypted_password  | string | null: false |
 | nickname            | string | null: false |
 | hiragana_name_first | string | null: false |
 | hiragana_name_last  | string | null: false |
