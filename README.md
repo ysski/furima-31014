@@ -4,17 +4,13 @@
 
 |        Column       |  Type  |   Options   |
 |---------------------|--------|-------------|
-| email               | string | null: false |
-| password            | string | null: false |
 | name                | string | null: false |
 | nickname            | string | null: false |
 | hiragana_name_first | string | null: false |
 | hiragana_name_last  | string | null: false |
 | katakana_name_first | string | null: false |
 | katakana_name_lst   | string | null: false |
-| date_of_birth_year  | integer| null: false |
-| date_of_birth_month | integer| null: false |
-| date_of_birth_day   | integer| null: false |
+| date_of_birth_id    |  date  | null: false |
 
 ### Association
 
@@ -24,14 +20,24 @@
 
 ## items table
 
-|    Column   |  Type  |   Options   |
-|-------------|--------|-------------| 
-| seller      | string | null: false |
-| category    | string | null: false |
-| condition   | string | null: false |
-| price       | integer| null: false |
-| item_name   | text   | null: false |
-| description | text   | null: false |
+|        Column       |   Type        |      Options       |
+|---------------------|---------------|--------------------| 
+| seller              | integer       | null: false        |
+| category_id         | integer       | null: false        |
+| condition           | integer       | null: false        |
+| price               | integer       | null: false        |
+| name                | string        | null: false        |
+| description         | text          | null: false        |
+| ship_from_id        | integer       | null: false        |
+| days_to_ship_id     | integer       | null: false        |
+| shipping_charges_id | integer       | null: false        |
+| user                | references    | foreign_key: true  |
+
+
+
+
+
+
 
 ### Association
 
@@ -43,24 +49,26 @@
 
 |Column|    Type    |      Options       |
 |------|------------|--------------------|
-| item | references | foreign_keys: true |
-| user | references | foreign_keys: true |
+| item | references | foreign_key: true  |
+| user | references | foreign_key: true  |
 
 ### Association
 
 * belongs_to :item
+* belongs_to :user
 * has_one :address
 
 ## addresses table
 
-|     Column    |   Type  |   Options   |
-|---------------|---------|-------------|
-| postcode      | integer | null: false |
-| prefectures   | string  | null: false |
-| city          | string  | null: false |
-| street        | string  | null: false |
-| building_name | string  | null: false |
-| phone_number  | integer | null: false |
+|     Column    |   Type      |      Options      |
+|---------------|-------------|-------------------|
+| postcode      | string      | null: false       |
+| prefecture_id | integer     | null: false       |
+| city          | string      | null: false       |
+| street        | string      | null: false       |
+| building_name | string      |                   |
+| phone_number  | string      | null: false       |
+| purchase      | references  | foreign_key: true |
 
 ### Association
 
