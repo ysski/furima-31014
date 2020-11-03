@@ -1,24 +1,67 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users table
 
-Things you may want to cover:
+|        Column       |  Type  |   Options   |
+|---------------------|--------|-------------|
+| email               | string | null: false |
+| password            | string | null: false |
+| name                | string | null: false |
+| nickname            | string | null: false |
+| hiragana_name_first | string | null: false |
+| hiragana_name_last  | string | null: false |
+| katakana_name_first | string | null: false |
+| katakana_name_lst   | string | null: false |
+| date_of_birth_year  | integer| null: false |
+| date_of_birth_month | integer| null: false |
+| date_of_birth_day   | integer| null: false |
 
-* Ruby version
+### Association
 
-* System dependencies
+* has_many :items
+* has_many :purchases
 
-* Configuration
 
-* Database creation
+## items table
 
-* Database initialization
+|    Column   |  Type  |   Options   |
+|-------------|--------|-------------| 
+| seller      | string | null: false |
+| category    | string | null: false |
+| condition   | string | null: false |
+| price       | integer| null: false |
+| item_name   | text   | null: false |
+| description | text   | null: false |
 
-* How to run the test suite
+### Association
 
-* Services (job queues, cache servers, search engines, etc.)
+* belongs_to :user
+* has_one :purchase
 
-* Deployment instructions
 
-* ...
+## purchases table
+
+|Column|    Type    |      Options       |
+|------|------------|--------------------|
+| item | references | foreign_keys: true |
+| user | references | foreign_keys: true |
+
+### Association
+
+* belongs_to :item
+* has_one :address
+
+## addresses table
+
+|     Column    |   Type  |   Options   |
+|---------------|---------|-------------|
+| postcode      | integer | null: false |
+| prefectures   | string  | null: false |
+| city          | string  | null: false |
+| street        | string  | null: false |
+| building_name | string  | null: false |
+| phone_number  | integer | null: false |
+
+### Association
+
+* belongs_to :purchase
