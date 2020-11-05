@@ -14,7 +14,6 @@ RSpec.describe User, type: :model do
       user = FactoryBot.build(:user)
       @user.nickname = nil
       @user.valid?
-
       expect(@user.errors.full_messages).to include("Nickname can't be blank")
     end
 
@@ -25,11 +24,40 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages).to include("Email can't be blank")
     end
 
-    it 'passwordは半角英数混合で、6文字以上の入力が必要なこと' do
+    it 'emailに@を含まなければ登録出来ないこと' do
+      user = FactoryBot.build(:user)
+      @user.email = "kkkgmail.com"
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Email is invalid")
+    end
+    
+    it 'passwordが空では登録できないこと' do
       user = FactoryBot.build(:user)
       @user.password = nil
       @user.valid?
       expect(@user.errors.full_messages).to include("Password can't be blank")
+    end
+
+    it 'passwordは半角英数混合で入力が必要なこと' do
+      user = FactoryBot.build(:user)
+      @user.password = nil
+      
+      @user.valid?
+      expect(@user.errors.full_messages).to include('Password need to be half-width alphanumeric mixed')
+    end
+
+    it "passwordが6文字以上でなければ登録できること" do
+      user = FactoryBot.build(:user)
+      @user.password_confirmation = nil
+      expect(@user).to be_valid
+    end
+
+    it "passwordとpassword_confirmationが不一致では登録できないこと" do
+      user = FactoryBot.build(:user)
+      @user.password = 000000
+      @user.password_confirmation = 111111
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
     end
 
     it 'hiragana_name_firstが全角（漢字・ひらがな・カタカナ）での入力が必要であること' do
