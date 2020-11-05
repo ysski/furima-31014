@@ -31,6 +31,13 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages).to include("Email is invalid")
     end
     
+    it "重複したemailが存在する場合登録できないこと" do
+      @user.save
+      another_user = FactoryBot.build(:user, email: @user.email)
+      another_user.valid?
+      expect(another_user.errors.full_messages).to include("Email has already been taken")
+    end
+
     it 'passwordが空では登録できないこと' do
       user = FactoryBot.build(:user)
       @user.password = nil
@@ -40,16 +47,16 @@ RSpec.describe User, type: :model do
 
     it 'passwordは半角英数混合で入力が必要なこと' do
       user = FactoryBot.build(:user)
-      @user.password = nil
-      
+      @user.password = "aaaaaa"
       @user.valid?
       expect(@user.errors.full_messages).to include('Password need to be half-width alphanumeric mixed')
     end
 
-    it "passwordが6文字以上でなければ登録できること" do
+    it "passwordが6文字以上でなければ登録できないこと" do
       user = FactoryBot.build(:user)
-      @user.password_confirmation = nil
-      expect(@user).to be_valid
+      @user.password = 11111
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
     end
 
     it "passwordとpassword_confirmationが不一致では登録できないこと" do
@@ -62,30 +69,30 @@ RSpec.describe User, type: :model do
 
     it 'hiragana_name_firstが全角（漢字・ひらがな・カタカナ）での入力が必要であること' do
       user = FactoryBot.build(:user)
-      @user.hiragana_name_first = nil
+      @user.hiragana_name_first = "yuuta"
       @user.valid?
-      expect(@user.errors.full_messages).to include("Hiragana name first can't be blank")
+      expect(@user.errors.full_messages).to include("Hiragana name first need to be full-width")
     end
 
     it 'hiragana_name_lastが全角（漢字・ひらがな・カタカナ）での入力が必要であること' do
       user = FactoryBot.build(:user)
-      @user.hiragana_name_last = nil
+      @user.hiragana_name_last = "sasaki"
       @user.valid?
-      expect(@user.errors.full_messages).to include("Hiragana name last can't be blank")
+      expect(@user.errors.full_messages).to include("Hiragana name last need to be full-width")
     end
 
     it 'katakana_name_firstが全角（カタカナ）での入力が必要であること' do
       user = FactoryBot.build(:user)
-      @user.katakana_name_first = nil
+      @user.katakana_name_first = "理恵"
       @user.valid?
-      expect(@user.errors.full_messages).to include("Katakana name first can't be blank")
+      expect(@user.errors.full_messages).to include("Katakana name first need to be full-width kana")
     end
 
     it 'katakana_name_lastが全角（カタカナ）での入力が必要であること' do
       user = FactoryBot.build(:user)
-      @user.katakana_name_last = nil
+      @user.katakana_name_last = "白井"
       @user.valid?
-      expect(@user.errors.full_messages).to include("Katakana name last can't be blank")
+      expect(@user.errors.full_messages).to include("Katakana name last need to be full-width kana")
     end
 
     it 'date_of_birth_idが空では登録できないこと' do
