@@ -9,7 +9,8 @@ class Item < ApplicationRecord
   validates :ship_from, presence: true
   validates :days_to_ship, presence: true
   validates :price, presence: true
-
+  validates :price, :numericality => { :greater_than => 300 }
+  validates :price, :numericality => { :less_than => 9999999 }
   validates :title, :text, presence: true
   validates :genre_id, numericality: { other_than: 1 } 
 
@@ -18,4 +19,8 @@ class Item < ApplicationRecord
   end
 
   belongs_to :genre
+  belongs_to :condition
+  belongs_to :ship
+  belongs_to :area
+  belongs_to :day
 end
