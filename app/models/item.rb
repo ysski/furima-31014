@@ -10,5 +10,7 @@ class Item < ApplicationRecord
   validates :price, presence: true
 
 
-
+  with_options presence: true, format: { with: /\A[0-9]+\z/, message: '' } do
+    validates :price
+  end
 end
