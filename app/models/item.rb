@@ -3,24 +3,23 @@ class Item < ApplicationRecord
   validates :name, presence: true
   validates :image, presence: true
   validates :description, presence: true
-  validates :condition, presence: true
-  validates :category, presence: true
-  validates :shipping_charges, presence: true
-  validates :ship_from, presence: true
-  validates :days_to_ship, presence: true
+  validates :condition_id, presence: true
+  validates :genre_id, presence: true, numericality: { other_than: 1 } 
+  validates :shipping_charge_id, presence: true
+  validates :ship_from_id, presence: true
+  validates :days_to_ship_id, presence: true
   validates :price, presence: true
   validates :price, :numericality => { :greater_than => 300 }
   validates :price, :numericality => { :less_than => 9999999 }
-  validates :title, :text, presence: true
-  validates :genre_id, numericality: { other_than: 1 } 
+
 
   with_options presence: true, format: { with: /\A[0-9]+\z/, message: '' } do
     validates :price
   end
-
+  has_one_attached :image
   belongs_to :genre
   belongs_to :condition
-  belongs_to :ship
-  belongs_to :area
-  belongs_to :day
+  belongs_to :ship_from
+  belongs_to :shipping_charge
+  belongs_to :days_to_ship
 end
