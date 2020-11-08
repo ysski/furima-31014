@@ -54,6 +54,12 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Ship from can't be blank")
       end
 
+      it 'genre_idの選択が--であれば出品は出来ないこと' do
+        @item.ship_from_id = 0
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Ship from must be other than 0")
+      end
+
       it 'days_to_ship_idを選択しなければ出品は出来ないこと' do
         @item.days_to_ship_id = nil
         @item.valid?
@@ -69,13 +75,13 @@ RSpec.describe Item, type: :model do
       it 'priceの範囲が￥300以上でなければ出品は出来ないこと' do
         @item.price = 299
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be greater than 300")
+        expect(@item.errors.full_messages).to include("Price must be greater than 299")
       end
 
       it 'priceの範囲が￥9,999,999以下でなければ出品は出来ないこと' do
         @item.price = 10000000
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be less than 9999999")
+        expect(@item.errors.full_messages).to include("Price must be less than 10000000")
       end
 
       it 'priceの半角数字のみでなければ出品は出来ないこと' do

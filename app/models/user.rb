@@ -11,7 +11,8 @@ class User < ApplicationRecord
   validates :katakana_name_first, presence: true
   validates :katakana_name_last, presence: true
   validates :date_of_birth_id, presence: true
-
+  
+  has_many :items
 
   with_options presence: true, format: { with: /\A[ぁ-んァ-ン一-龥]+\z/, message: 'need to be full-width' } do
     validates :hiragana_name_first
@@ -29,3 +30,5 @@ class User < ApplicationRecord
   EMAIL_REGEX = /\A[^@\s]+@[^@\s]+\z/.freeze
   validates_format_of :email, with: EMAIL_REGEX, message: 'Email is invalid'
 end
+
+  
