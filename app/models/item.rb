@@ -6,9 +6,9 @@ class Item < ApplicationRecord
     validates :name
     validates :image
     validates :description
-    validates :condition_id
-    validates :shipping_charge_id
-    validates :days_to_ship_id
+    validates :condition_id, numericality: { other_than: 1 } 
+    validates :shipping_charge_id, numericality: { other_than: 1 } 
+    validates :days_to_ship_id, numericality: { other_than: 1 } 
     validates :genre_id, numericality: { other_than: 1 } 
     validates :ship_from_id, numericality: { other_than: 0 }
     validates :price, numericality: { greater_than: 299 }
