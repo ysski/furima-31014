@@ -8,12 +8,11 @@ class Item < ApplicationRecord
   validates :shipping_charge_id, presence: true
   validates :ship_from_id, presence: true
   validates :days_to_ship_id, presence: true
-  validates :price, presence: true
-  validates :price, :numericality => { :greater_than => 300 }
-  validates :price, :numericality => { :less_than => 9999999 }
+  validates :price, numericality: { :greater_than => 300 }
+  validates :price, numericality: { :less_than => 9999999 }
 
 
-  with_options presence: true, format: { with: /\A[0-9]+\z/, message: '' } do
+  with_options presence: true, format: { with: /\A[0-9]+\z/, message: 'Price is not a number'} do
     validates :price
   end
   has_one_attached :image
