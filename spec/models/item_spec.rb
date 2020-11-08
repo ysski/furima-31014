@@ -36,6 +36,12 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Genre can't be blank")
       end
 
+      it 'genre_idの選択が--であれば出品は出来ないこと' do
+        @item.genre_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Genre must be other than 1")
+      end
+
       it 'shipping_charge_idを選択しなければ出品は出来ないこと' do
         @item.shipping_charge_id = nil
         @item.valid?
@@ -61,13 +67,13 @@ RSpec.describe Item, type: :model do
       end
 
       it 'priceの範囲が￥300以上でなければ出品は出来ないこと' do
-        @item.price = 1
+        @item.price = 299
         @item.valid?
         expect(@item.errors.full_messages).to include("Price must be greater than 300")
       end
 
       it 'priceの範囲が￥9,999,999以下でなければ出品は出来ないこと' do
-        @item.price = 99999999
+        @item.price = 10000000
         @item.valid?
         expect(@item.errors.full_messages).to include("Price must be less than 9999999")
       end
