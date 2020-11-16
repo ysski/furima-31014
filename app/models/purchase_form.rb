@@ -1,7 +1,7 @@
-class UserPurchase
+class PurchaseForm
   
   include ActiveModel::Model
-  attr_accessor :token, :postcode, :prefecture_id, :city, :street, :building_name, :phone_number
+  attr_accessor :token, :postcode, :prefecture_id, :city, :street, :building_name, :phone_number, :item_id, :user_id
 
   # ここにバリデーションの処理を書く
   with_options presence: true do
@@ -10,12 +10,12 @@ class UserPurchase
     validates :prefecture_id, numericality: { other_than: 0, message: "can't be blank" }
     validates :city
     validates :street
-    validates :building_name
+  
   end
 
 
   def save
-    Address.create(:postcode, :prefecture_id, :city, :street, :building_name, :phone_number)
-    Purchase.create(:user_id, :item_id)
+    purchase = Purchase.create(user_id: user_id, item_id: item_id)
+    Address.create(postcode: postcode, prefecture_id: prefecture_id, city: city, street: street, building_name: building_name, phone_number: phone_number, purchase_id: purchase.id)
   end
 end

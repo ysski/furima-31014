@@ -33,16 +33,11 @@
 | shipping_charges_id | integer       | null: false        |
 | user                | references    | foreign_key: true  |
 
-
-
-
-
-
-
 ### Association
 
 * belongs_to :user
 * has_one :purchase
+
 
 
 ## purchases table
@@ -57,6 +52,8 @@
 * belongs_to :item
 * belongs_to :user
 * has_one :address
+
+
 
 ## addresses table
 
