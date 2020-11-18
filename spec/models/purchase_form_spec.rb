@@ -1,21 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe PurchaseForm, type: :model do
-  describe 'Purchase' do
+  describe '商品購入機能' do
     before do
       @purchase_form = FactoryBot.build(:purchase_form)
     end
 
-  describe '商品購入機能' do
     context '商品購入がうまくいくとき' do
       it '必要な情報を適切に入力すると、商品の購入ができること' do
         expect(@purchase_form).to be_valid
       end
     end
-  end
-    
 
-    context '商品購入がうまくいかないとき' do       
+    context '商品購入がうまくいかないとき' do
       it '郵便番号が空では登録できないこと' do
         @purchase_form.postcode = nil
         @purchase_form.valid?
@@ -62,6 +59,8 @@ RSpec.describe PurchaseForm, type: :model do
         @purchase_form.token = nil
         @purchase_form.valid?
         expect(@purchase_form.errors.full_messages).to include("Token can't be blank")
-      end 
+      end
     end
+    
   end
+end
