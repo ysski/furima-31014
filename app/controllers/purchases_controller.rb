@@ -1,19 +1,18 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_items
   before_action :move_to_login
-  before_action :repeat_item
+  
   def index 
     if @item.purchase != nil
       redirect_to root_path
     end
     @purchase_form = PurchaseForm.new
-    
   end
 
   def create
-    
     @purchase_form = PurchaseForm.new(purchase_params)
-  
+
     if @purchase_form.valid?
       pay_item
       @purchase_form.save
@@ -30,15 +29,14 @@ class PurchasesController < ApplicationController
       params.require(:purchase_form).permit(:postcode, :prefecture_id, :city, :street, :building_name, :phone_number).merge(token: params[:token], item_id: params[:item_id], user_id: current_user.id)
     end
 
-    def repeat_item
+    def set_items
       @item = Item.find(params[:item_id])
     end
 
     def move_to_login
-      @item = Item.find(params[:item_id])
-        if current_user.id == @item.user_id
-          redirect_to root_path
-        end
+      if current_user.id == @item.user_id
+        redirect_to root_path
+      end
     end
 
     def pay_item

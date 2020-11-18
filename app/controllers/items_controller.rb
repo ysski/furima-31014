@@ -15,11 +15,9 @@ class ItemsController < ApplicationController
   end
 
   def edit 
-    if user_signed_in?
-      if @item.purchase != nil
-        redirect_to root_path
-      end
-    end   
+    if @item.purchase != nil
+      redirect_to root_path
+    end
   end
 
   def destroy
