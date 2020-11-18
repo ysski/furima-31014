@@ -11,6 +11,9 @@ class PurchaseForm
     validates :city
     validates :street
     validates :token
+    validates :item_id
+    validates :user_id
+    
   end
 
 
