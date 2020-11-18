@@ -4,9 +4,6 @@ class PurchasesController < ApplicationController
   before_action :move_to_login
   
   def index 
-    if @item.purchase != nil
-      redirect_to root_path
-    end
     @purchase_form = PurchaseForm.new
   end
 
@@ -34,7 +31,7 @@ class PurchasesController < ApplicationController
     end
 
     def move_to_login
-      if current_user.id == @item.user_id
+      if current_user.id == @item.user_id && @item.purchase != nil
         redirect_to root_path
       end
     end
