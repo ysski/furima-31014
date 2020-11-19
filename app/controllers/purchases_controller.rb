@@ -31,7 +31,7 @@ class PurchasesController < ApplicationController
     end
 
     def move_to_login
-      if current_user.id == @item.user_id && @item.purchase != nil
+      if current_user.id == @item.user_id || @item.purchase != nil
         redirect_to root_path
       end
     end
