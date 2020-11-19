@@ -15,6 +15,7 @@ class Item < ApplicationRecord
     validates :price, numericality: { less_than: 10000000 }
   end
     has_one_attached :image
+    has_one :purchase
     belongs_to :genre
     belongs_to :condition
     belongs_to :ship_from
